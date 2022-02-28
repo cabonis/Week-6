@@ -111,7 +111,7 @@ Promise.all([
                 countyData[key] = {};
                 countyData[key]["County"] = county[0].name;
                 countyData[key]["Pop. 1980"] = reduced[POP1980];
-                countyData[key]["Pop. 1990"] = reduced[POP1980];
+                countyData[key]["Pop. 1990"] = reduced[POP1990];
                 countyData[key]["Pop. 2000"] = reduced[POP2000];
                 countyData[key]["Pop. 2010"] = reduced[POP2010];
             });
