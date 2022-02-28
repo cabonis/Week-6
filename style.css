@@ -1,0 +1,55 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+}
+
+.page {
+    width: 70vw;
+    margin: auto;
+    height: 100%;
+}
+
+svg {
+    width: 73vw;
+    height: 65vw;
+    margin:auto;
+}
+
+h3 {
+    margin-bottom: 20px;
+}
+
+.tooltip {
+    position: absolute;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    width: auto;
+    padding: 10px;
+    background: white;
+    font-family: sans-serif;
+    font-size: medium;
+    border-radius: 2px;
+    line-height: 1;
+    pointer-events: none;
+}
+
+.infoCard {
+    position: absolute;
+    opacity: 0;
+    width: 15vw;
+    top: 15px;
+    right: 0;
+}
+
+path {
+    stroke-width: .5px;
+    stroke: black;
+    pointer-events:all;
+}
+
+path:hover {
+    stroke: black;
+    stroke-width: 4px;
+}
