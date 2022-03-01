@@ -1,6 +1,4 @@
-var drawMap = function(container, size, geojson, contentProvider){
-
-    const content = contentProvider();
+var drawMap = function(container, size, geojson, content){
 
     var makeHtml = function(params){
         if(params){
@@ -20,15 +18,15 @@ var drawMap = function(container, size, geojson, contentProvider){
     const geoPath_generator = d3.geoPath().projection(d3.geoMercator().fitSize([size.viewbox.width - size.margins.right, size.viewbox.height - size.margins.bottom], geojson))
 
     d3.select(container)
-    .style("position", "relative");
+        .style("position", "relative");
 
-    let svg = d3.select(container).append("svg")
+    const svg = d3.select(container).append("svg")
         .attr("viewBox", `0, 0, ${size.viewbox.width}, ${size.viewbox.height}`);
 
-    let tooltip = d3.select(container).append("div")
+    const tooltip = d3.select(container).append("div")
         .attr("class", "tooltip");
 
-    let infoCard = d3.select(container).append("div")
+    const infoCard = d3.select(container).append("div")
         .attr("class", "infoCard");
 
     svg.selectAll("path")
@@ -48,6 +46,9 @@ var drawMap = function(container, size, geojson, contentProvider){
                 .duration(200)
                 .style("opacity", 1);
             infoCard.html(makeHtml(content.infoCardGenerator(d)));
+            if(content.customMouseEnter){
+                content.customMouseEnter(d, svg);
+            }
         })
         .on("mouseout", (m, d) => {
             tooltip.transition()
@@ -55,6 +56,9 @@ var drawMap = function(container, size, geojson, contentProvider){
                 .style("opacity", 0);
             infoCard.transition()
                 .duration(200)
-                .style("opacity", 0)
+                .style("opacity", 0);
+            if(content.customMouseOut) {
+                content.customMouseOut(d, svg);
+            }
         });
 }

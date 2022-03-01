@@ -27,7 +27,7 @@ Promise.all([
     /*-------------------------------------------------------*/
     /*---------------------- Part 1  ------------------------*/
     /*-------------------------------------------------------*/
-    drawMap("#part1", size, geojson, () => {
+    drawMap("#part1", size, geojson, (() => {
 
         const pop1980 = function(d){
             return {
@@ -51,13 +51,13 @@ Promise.all([
             tooltipGenerator: (d) => pop1980(d),
             infoCardGenerator: (d) => {}
         }
-    });
+    })());
 
     
     /*-------------------------------------------------------*/
     /*---------------------- Part 2  ------------------------*/
     /*-------------------------------------------------------*/
-    drawMap("#part2", size, geojson, () => {
+    drawMap("#part2", size, geojson, (() => {
         
         let popChange = function(d){
             let pop2000 = d[PROPERTIES][POP2000]
@@ -76,12 +76,13 @@ Promise.all([
             tooltipGenerator: (d) => popChange(d),
             infoCardGenerator: (d) => {}
         }
-    });
+    })());
+
 
     /*-------------------------------------------------------*/
     /*---------------------- Part 3  ------------------------*/
     /*-------------------------------------------------------*/
-    drawMap("#part3", size, geojson, () => {
+    drawMap("#part3", size, geojson, (() => {
 
         const pop2010 = function(d){
             return {
@@ -96,7 +97,7 @@ Promise.all([
             let countyData = {};     
             counties.forEach((values, key) => {
 
-                reduced = values.reduce((acc, item) => {
+                let reduced = values.reduce((acc, item) => {
                     acc.POP1980 += item[PROPERTIES][POP1980];
                     acc.POP1990 += item[PROPERTIES][POP1990]
                     acc.POP2000 += item[PROPERTIES][POP2000];
@@ -126,8 +127,16 @@ Promise.all([
         return {
             colorMapper: (d) => colorScale(d[PROPERTIES][CONUTYGROUP]),
             tooltipGenerator: (d) => pop2010(d),
-            infoCardGenerator: (d) => countiesConsolidated[d[PROPERTIES][CONUTYGROUP]]
+            infoCardGenerator: (d) => countiesConsolidated[d[PROPERTIES][CONUTYGROUP]],
+            customMouseEnter: (d, svg) => {
+                svg.selectAll("path").filter((p) => p[PROPERTIES][CONUTYGROUP] == d[PROPERTIES][CONUTYGROUP])
+                    .style("opacity", .3);
+            },
+            customMouseOut: (d, svg) => {
+                svg.selectAll("path").filter((p) => p[PROPERTIES][CONUTYGROUP] == d[PROPERTIES][CONUTYGROUP])
+                    .style("opacity", 1);
+            }
         }
-    });
+    })());
 
 })
