@@ -55,7 +55,3 @@ path:hover {
     stroke: yellow;
     stroke-width: 4px;
 }
-
-.selected {
-    background-color: white;
-}
